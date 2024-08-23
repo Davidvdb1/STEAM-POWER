@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: twa
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userPW
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db.ddl:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+        DB_HOST: db
+        DB_USER: user
+        DB_PASSWORD: userPW
+        DB_NAME: twa
+    depends_on:
+      - db
+    links:
+      - db
+
+volumes:
+  db_data:

@@ -1,0 +1,868 @@
+ /* algemene css*/
+ body {
+   background-color: rgb(245, 245, 246);
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+   font-family: Arial, sans-serif;
+
+ }
+
+ img {
+   margin: 5px;
+ }
+
+ main {
+   flex-grow: 1;
+   margin-top: 1.5rem;
+   padding: 16px;
+ }
+
+
+ h1 {
+   text-align: center;
+   margin-top: 20px;
+ }
+
+ h2 {
+   text-align: center;
+   margin-bottom: 20px;
+ }
+
+ html {
+   overflow-x: hidden;
+ }
+
+ #content-container {
+   max-width: 1100px;
+   margin: auto;
+ }
+
+ .flex-container {
+   display: flex;
+   justify-content: space-between;
+   flex: 1;
+ }
+
+ .my-city-container {
+   margin: 0 auto;
+   display: flex;
+   justify-content: center;
+ }
+
+ .details-container {
+   display: flex;
+   flex-direction: column;
+ }
+
+ @media screen and (max-width: 1100px) {
+   .flex-container {
+     flex-direction: column;
+   }
+ }
+
+ .permission-message {
+   color: red;
+   text-align: center;
+   margin-top: 20px;
+ }
+
+ /* footer css */
+ .footer {
+   background-color: rgb(86, 205, 233);
+ }
+
+ /* header css */
+ .header {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   height: auto;
+   margin: 0;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   background-color: rgb(231, 51, 82);
+   padding: 16px !important;
+ }
+
+ .container-nav {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+   background-color: white;
+   border-radius: 8px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   padding: 16px;
+   transition: box-shadow 0.3s ease;
+
+   max-width: 1100px;
+   margin: auto;
+ }
+
+ .navbar-toggler-icon {
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%2888, 88, 88, 0.7%29' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+ }
+
+ .navbar-nav {
+   align-items: center;
+ }
+
+ .navbar-nav .nav-item {
+   margin-right: 1.5rem;
+ }
+
+ .nav-logo {
+   width: 5rem;
+ }
+
+ .nav-link {
+   text-align: center;
+ }
+
+ /* styles data-overview component*/
+ #connect {
+   margin-left: auto;
+   margin-right: auto;
+   padding: 10px 20px;
+   font-size: 16px;
+   font-weight: bold;
+   color: #ffffff;
+   background-color: #007bff;
+   width: 60%;
+   border-radius: 5px;
+ }
+
+ #connect i {
+   margin-right: 8px;
+ }
+
+ #connect:hover {
+   background-color: #0056b3;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+ }
+
+ #connect:focus {
+   outline: none;
+   box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5);
+ }
+
+ .status_field {
+   text-align: center;
+ }
+
+ #status {
+   margin: 1rem auto 1rem auto;
+   padding: 15px 30px;
+   color: #ffffff;
+   text-align: center;
+   font-weight: bold;
+   border-radius: 5px;
+   font-size: 16px;
+   width: 60%;
+ }
+
+ .status {
+   display: none;
+ }
+
+ .status_error {
+   background-color: #ea7071;
+   display: flex;
+   border: solid red 2px;
+ }
+
+ .status_success {
+   background-color: #72cd44;
+   display: flex;
+   border: solid green 2px;
+ }
+
+ .connection_container {
+   margin-bottom: 1rem;
+   text-align: center;
+   border-radius: 8px;
+ }
+
+ /* login css & signup css & groep */
+ .no-account {
+   color: rgb(51, 93, 136);
+   text-decoration: underline;
+   margin-bottom: 1rem;
+   font-weight: bold;
+ }
+
+ .no-account:hover {
+   cursor: pointer;
+   color: rgb(231, 51, 82);
+ }
+
+ login-form,
+ signup-form,
+ group-join form,
+ create-group form,
+ recover-password-form form,
+ reset-password-page form {
+   display: block;
+   max-width: 500px;
+   margin: 0 auto;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+   color: #000000;
+   position: relative;
+ }
+
+ create-group form {
+   display: block;
+   max-width: 500px;
+   margin: 0 auto 1rem auto;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+   color: #000000;
+   position: relative;
+ }
+
+ login-form h2,
+ signup-form h2,
+ group-join h2,
+ create-group h2,
+ recover-password-form h2,
+ reset-password-page h2 {
+   text-align: center;
+   margin-bottom: 20px;
+ }
+
+ login-form form,
+ signup-form form,
+ group-join form,
+ create-group form,
+ recover-password-form form,
+ reset-password-page form {
+   display: flex;
+   flex-direction: column;
+ }
+
+ login-form label,
+ signup-form label,
+ group-join label,
+ create-group label,
+ recover-password-form label,
+ reset-password-page label {
+   margin-bottom: 5px;
+ }
+
+ login-form input[type="email"],
+ login-form input[type="password"],
+ signup-form input[type="text"],
+ signup-form input[type="email"],
+ signup-form input[type="password"],
+ group-join input[type="text"],
+ create-group input[type="text"],
+ recover-password-form input[type="email"],
+ reset-password-page input[type="password"] {
+   padding: 10px;
+   margin-bottom: 15px;
+   border: none;
+   border-radius: 4px;
+   background-color: rgb(235, 234, 234);
+   color: black;
+ }
+
+ login-form input[type="submit"],
+ signup-form input[type="submit"],
+ group-join input[type="submit"],
+ create-group input[type="submit"],
+ recover-password-form input[type="submit"],
+ reset-password-page input[type="submit"] {
+   padding: 10px;
+   border: none;
+   border-radius: 4px;
+   background-color: rgb(231, 51, 82);
+   color: #fff;
+   cursor: pointer;
+   font-size: 16px;
+ }
+
+ login-form input[type="submit"]:hover,
+ signup-form input[type="submit"]:hover,
+ group-join input[type="submit"]:hover,
+ create-group input[type="submit"]:hover,
+ recover-password-form input[type="submit"]:hover,
+ reset-password-page input[type="submit"]:hover {
+   background-color: rgb(86, 205, 233);
+ }
+
+ signup-form #backToLogin {
+   position: absolute;
+   top: 1rem;
+   left: 1.5rem;
+   font-size: 33px;
+   color: rgb(231, 51, 82);
+   text-decoration: none;
+ }
+
+ .colour-background {
+   background: #DFFCE9;
+ }
+
+ signup-form #backToLogin:hover {
+   color: rgb(51, 93, 136);
+ }
+
+
+ /* planning style */
+ .planning-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(200, 1fr));
+   gap: 16px;
+   padding: 16px;
+   overflow: hidden;
+ }
+
+ #search-bar,
+ #location-filter,
+ #age-filter {
+   padding: 10px;
+   margin: 0.5rem;
+   border: none;
+   border-radius: 4px;
+   background-color: rgb(235, 234, 234);
+   color: black;
+ }
+
+ #sort-dropdown,
+ #start-date-filter,
+ #end-date-filter,
+ #search-button,
+ #reset-button {
+   padding: 10px;
+   margin: 0.5rem;
+   border: none;
+   border-radius: 4px;
+   background-color: rgb(235, 234, 234);
+ }
+
+ #search-button,
+ #reset-button {
+   background-color: rgb(231, 51, 82);
+   color: #fff;
+   cursor: pointer;
+   font-size: 16px;
+ }
+
+ .search-sort-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 20px 0;
+ }
+
+ .search-row,
+ .filter-row,
+ .sort-row {
+   display: flex;
+   align-items: center;
+   margin: 5px;
+ }
+
+ @media (max-width: 600px) {
+   .search-sort-container {
+     flex-direction: column;
+     align-items: stretch;
+   }
+
+   #search-bar,
+   #sort-name,
+   #sort-date {
+     width: 80%;
+     margin: 0.5rem auto;
+   }
+ }
+
+ .more-info {
+   border-color: #38afe2;
+   color: #38afe2;
+   align-items: center;
+   background: white;
+   padding: .6rem 1rem;
+   border-radius: 5px;
+   display: inline-flex;
+   font-weight: 600;
+   outline: 0;
+   text-transform: uppercase;
+   cursor: pointer;
+   transition: .3s ease-in-out;
+   font-size: 1rem;
+   font-weight: bold;
+   box-shadow: none;
+   border-style: solid;
+ }
+
+ .more-info:hover {
+   color: #7ecff9;
+   border-color: #7ecff9;
+ }
+
+ /* Media query for larger screens */
+ @media (min-width: 800px) {
+   .planning-container {
+     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+   }
+ }
+
+ article {
+   position: relative;
+   background-color: white;
+   border-radius: 8px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+   padding: 16px;
+   transition: box-shadow 0.3s ease;
+   overflow: hidden;
+   box-sizing: border-box;
+
+ }
+
+ article:hover {
+   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+ }
+
+ .settings-icon {
+   position: absolute;
+   top: 16px;
+   right: 16px;
+   cursor: pointer;
+ }
+
+ .dropdown {
+   display: none;
+   position: absolute !important;
+   top: 36px;
+   right: 16px;
+   background-color: white;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   border-radius: 4px;
+   overflow: hidden;
+   z-index: 10;
+ }
+
+ .dropdown a {
+   display: block;
+   padding: 8px 16px;
+   text-decoration: none;
+   color: black;
+ }
+
+ .dropdown a:hover {
+   background-color: #f0f0f0;
+ }
+
+ .add-workshop:hover {
+   cursor: pointer;
+   background-color: #f0f0f0;
+ }
+
+ .add-workshop div {
+   transition: all 0.3s ease-in-out;
+ }
+
+ .add-workshop:hover div {
+   transform: scale(1.1);
+   border-color: #000;
+ }
+
+ .no-select {
+   user-select: none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+ }
+
+ .img-scale {
+   width: 10rem;
+   height: auto;
+   display: block;
+ }
+
+ @media (min-width: 500px) {
+   .img-scale {
+     width: 20rem;
+     height: auto;
+   }
+ }
+
+ .img-scale-revert {
+  height: 10rem;
+  width: auto;
+  display: block;
+}
+
+@media (min-width: 500px) {
+  .img-scale-revert {
+    height: 20rem;
+    width: auto;
+  }
+}
+
+ /* save workshop html*/
+ textarea .content-text {
+   resize: none;
+ }
+
+ .container-save-workshop {
+   max-width: 600px;
+   margin: 2rem auto;
+   background-color: #fff;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ }
+
+ .form-group {
+   margin-bottom: 15px;
+ }
+
+ #workshopForm input,
+ #workshopForm textarea,
+ #workshopForm select {
+   width: 100%;
+   padding: 10px;
+   margin-top: 5px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   box-sizing: border-box;
+
+ }
+
+ #workshopForm button.add-component,
+ #workshopForm button.save-workshop {
+   width: 100%;
+   padding: 10px;
+   border: none;
+   border-radius: 4px;
+   background-color: rgb(86, 205, 233);
+   color: #000;
+   cursor: pointer;
+   font-size: 16px;
+ }
+
+ .components {
+   margin-top: 20px;
+ }
+
+ .component {
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   padding: 10px;
+   margin-bottom: 10px;
+   position: relative;
+   background-color: #fafafa;
+ }
+
+ .component .remove-button {
+   position: absolute;
+   top: 0;
+   right: 0;
+   color: white;
+   width: 25px;
+   height: 25px;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 16px;
+   line-height: 1;
+   margin: 0;
+ }
+
+ button.add-component {
+   margin-bottom: 1rem;
+ }
+
+ #workshopForm button.add-component:hover,
+ #workshopForm button.save-workshop:hover {
+   background-color: rgb(231, 51, 82);
+ }
+
+ .content-file-label {
+   display: inline-block;
+   padding: 0.5rem;
+   background-color: rgb(240, 240, 240);
+   text-align: center;
+   border: rgb(208, 208, 208) 2px solid;
+   border-radius: 4px;
+   cursor: pointer;
+   user-select: none;
+   margin: 0 0.5rem 0 0;
+ }
+
+ .file-input-container {
+   display: flex;
+   align-items: center;
+   justify-self: center;
+   margin: 0.5rem 0 0 0;
+ }
+
+ .content-file-input {
+   display: none;
+ }
+
+ /* energy-voorwerp-overview */
+ .div {
+   margin: 0;
+   padding: 0 1rem 1rem 1rem;
+ }
+
+ .container {
+   width: 90%;
+   max-width: 1000px;
+   margin: 0 auto;
+ }
+
+
+ .chargable-card {
+   position: absolute;
+   top: 0;
+   left: 0;
+   padding: 10px;
+   ;
+ }
+
+ .card {
+
+   border-radius: 12px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   margin: 15px 0;
+   padding: 20px;
+   width: 100%;
+   transition: transform 0.2s;
+ }
+
+ .card:hover {
+   transform: scale(1.02);
+ }
+
+ .card h2 {
+   margin-top: 0;
+   font-size: 1.5em;
+ }
+
+ .card p {
+   color: #333;
+   line-height: 1.6;
+   font-size: 1.1em;
+ }
+
+ .card p strong {
+   color: #e94e77;
+ }
+
+ .marked {
+   font-weight: bold;
+   border: 2px solid red;
+ }
+
+ .marked-cell {
+   background: rgb(255, 0, 0, 0.2) !important;
+ }
+
+ .flex-center-container {
+   display: flex;
+   align-items: center;
+ }
+
+ .multiplier,
+ .equals {
+   font-size: 24px;
+   margin: 0 10px;
+   color: #333;
+   font-size: 16px;
+   font-weight: bold;
+ }
+
+ .solarpanel {
+   width: 5rem;
+   object-fit: cover;
+   margin: 0 10px;
+   border-radius: 5px;
+   border: 2px solid #ddd;
+ }
+
+ /* dropdown camp css*/
+ dropdown-component .dropdown-menu {
+   max-height: 300px;
+   overflow-y: auto;
+ }
+
+ dropdown-component .dropdown-item {
+   white-space: normal;
+ }
+
+ dropdown-component .dropdown-toggle {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   max-width: 100%;
+ }
+
+ dropdown-component .input-group {
+   padding: 0.5rem;
+ }
+
+ dropdown-component .form-control {
+   width: calc(100% - 80px);
+ }
+
+ dropdown-component .btn-outline-secondary {
+   width: 70px;
+ }
+
+ dropdown-component .form-check {
+   display: flex;
+   align-items: center;
+ }
+
+ dropdown-component .form-check-input {
+   margin-right: 0.5rem;
+ }
+
+ dropdown-component .dropdown-divider {
+   margin: 0.5rem 0;
+ }
+
+ dropdown-component input {
+   width: 5% !important;
+ }
+
+ dropdown-component .dropdown-menu {
+   left: unset !important;
+   right: 0 !important;
+ }
+
+ dropdown-component .dropdown-toggle {
+   margin-right: 0 !important;
+ }
+
+ @media (min-width: 500px) {
+  .nav-logo {
+    width: 10rem;
+  }
+}
+
+@media (min-width:1100px) {
+  .nav-logo {
+    width: auto;
+  }
+
+  .nav-link {
+     margin-bottom: 0 !important;
+  }
+}
+
+ @media (min-width: 1100px) {
+  .navbar-expand-custom .navbar-nav {
+      flex-direction: row;
+  }
+}
+
+@media (min-width: 1100px) {
+  .navbar-expand-custom .navbar-collapse {
+      display: flex !important;
+      flex-basis: auto;
+  }
+}
+
+@media (min-width: 1100px) {
+  .navbar-expand-custom .navbar-toggler {
+      display: none;
+  }
+}
+
+ /* MicrobitManual */
+ .manual-content {
+   width: 80%;
+   margin-left: auto;
+   margin-right: auto;
+ }
+
+ .manual-img {
+   width: 30%;
+ }
+
+ .manual-stap-container {
+   display: flex;
+   align-items: center;
+ }
+
+ .collapsible-step {
+   background-color: rgb(231, 51, 82);
+   color: white;
+   width: 100%;
+   border: none;
+   padding: 10px;
+   margin-bottom: 4px;
+ }
+
+ .collapsible-step:hover {
+   background-color: rgb(151, 21, 52);
+ }
+
+ .collapsible-step + section{
+   background-color: white;
+   border-radius: 8px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+   padding: 16px;
+   transition: box-shadow 0.3s ease;
+   overflow: hidden;
+   box-sizing: border-box;
+   margin-bottom: 15px;
+ }
+
+
+ .manual-title {
+    text-align: center;
+ }
+
+ workshop-details-page {
+  height: 100%;
+  display: block;
+}
+
+ .centered-content {
+  padding: 1rem;
+  margin: auto;
+  width: 70%;
+}
+
+@media (max-width: 800px) {
+  .centered-content {
+    width: 100%;
+  }
+}
+
+.planning-article:hover {
+  cursor: pointer;
+}
+
+.spinner {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+  margin-top: 10%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-active .spinner {
+  display: block;
+}

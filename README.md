@@ -78,7 +78,7 @@ To start the project using Docker, follow these steps:
 
 This command will build and start the containers for both the backend and frontend.
 
-## Manual Setup
+## Manual Setup (These steps are ONLY required for when the docker setup doesn't work!!!!!)
 
 If you prefer to set up the project manually, follow the instructions below for both the backend and frontend.
 

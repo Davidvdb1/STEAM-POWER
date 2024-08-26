@@ -18,3 +18,10 @@ EXPOSE 3000
 
 # Start the application
 CMD ["npm", "start"]
+
+# Install curl in your backend Dockerfile if necessary
+RUN apt-get update && apt-get install -y curl
+
+# Add wait-for-it script in your backend Dockerfile
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh

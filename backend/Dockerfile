@@ -18,7 +18,3 @@ EXPOSE 3000
 
 # Start the application
 CMD ["npm", "start"]
-
-# Add wait-for-it script in your backend Dockerfile
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
-RUN chmod +x /usr/local/bin/wait-for-it.sh

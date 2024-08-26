@@ -31,8 +31,10 @@ services:
         DB_USER: user
         DB_PASSWORD: userPW
         DB_NAME: twa
+        DB_PORT: 3306
     depends_on:
       - db
+    command: ["./wait-for-it.sh", "db:3306", "--", "npm", "start"]
     links:
       - db
 

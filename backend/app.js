@@ -17,7 +17,7 @@ const app = express();
 app.use(helmet());
 app.use(helmet.contentSecurityPolicy({
     directives: {
-        connectSrc: ['self', 'https://api.ucll.be', 'http://localhost:3000', 'http://localhost:52330'],
+        connectSrc: ['self', 'https://api.ucll.be', 'http://192.168.0.151:3000', 'http://192.168.0.151:52330'],
     }
 }));
 

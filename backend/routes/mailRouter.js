@@ -31,7 +31,7 @@ mailRouter.post('/send-recover-mail', async (req, res, next) => {
             from: 'twaleuvennoreply@gmail.com',
             to: toEmail,
             subject: 'Password Reset',
-            text: `You have 15 minutes for resetting your password.\nClick the link to reset your password: http://twa.davidvdandenbroeck.com/frontend/index.html?token=${token}`
+            text: `You have 15 minutes for resetting your password.\nClick the link to reset your password: http:/localhost/frontend/index.html?token=${token}`
         };
 
         const info = await transporter.sendMail(mailOptions);

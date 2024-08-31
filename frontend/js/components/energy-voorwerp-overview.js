@@ -1,116 +1,265 @@
 import ClassroomService from "../../service/classroom.service.js";
+import CardService from "../../service/card.service.js";
+import cardService from "../../service/card.service.js";
 
 class EnergyVoorwerpOverview extends HTMLElement {
-    constructor() {
-        super();
-        this.energy = 0.00;
-        this.fetchEnergy = (value) => {
-            if (this.energy != value) {
-                this.energy = value;
-                this.generateHtml();
-            }
-            this.energy = value;
-        }
+  constructor() {
+    super();
+    this.energy = 0.00;
+    this.cards = []; // Array to store card data
 
-
-        classroomEnergyObserver.setFetchEnergy(ClassroomService.fetchClassroomById);
-        classroomEnergyObserver.subscribe({ name: 'energy-item-fetchEnergy', cb: this.fetchEnergy });
-    }
-
-    connectedCallback() {
+    this.fetchEnergy = (value) => {
+      if (this.energy !== value) {
+        this.energy = value;
         this.generateHtml();
+      }
+    };
+
+    this.eventListeners = [];
+
+    classroomEnergyObserver.setFetchEnergy(ClassroomService.fetchClassroomById);
+    classroomEnergyObserver.subscribe({ name: 'energy-item-fetchEnergy', cb: this.fetchEnergy });
+  }
+
+  registerEventListener = (element, type, cb) => {
+    element.addEventListener(type, cb);
+    this.eventListeners.push({element: element, type: type, cb: cb});
+  }
+
+  async loadCardsFromDatabase() {
+    try {
+      this.cards = await CardService.fetchAllCards();
+
+      console.log('Cards data:', this.cards);
+      this.generateHtml();
+    } catch (error) {
+      console.error(error);
+      this.innerHTML = `
+      <div class="error">
+        <h2>Error loading cards</h2>
+        <p>${error.message}</p>
+      </div>
+    `;
     }
+  }
 
-    generateHtml() {
-        this.innerHTML = `
-        <div class="div">
+  async createCard(cardData) {
+    try {
+      const newCardId = await CardService.createCard(cardData);
+      console.log('New card ID:', newCardId);
+    } catch (error) {
+      console.error('Error creating card:', error);
+    }
+  }
 
-            <div class="card" style="margin-top: 0">
-                ${(this.energy >= 15 ? "<b class='chargable-card'>🔋</b>" : "<b class='chargable-card'>🪫</b>")}
-                <h2>Ledstrip</h2>
-                <p> Typisch neemt een LED strip tussen de <strong>14 en 15 W/meter.</strong>
-                Elke LED van een LED strip zou minder dan <strong>0.2 Watt</strong> Vermogen vragen.
-                Dus met <strong>1 Watt-seconde</strong> kan je één LED van een LED strip
-                <strong>5 seconden</strong> laten branden. </p>
-                <div class="flex-center-container">
-                    <p class="multiplier">3 X</p>
-                    <img src="img/solarpanel.jpg" alt="Solarpanel Image" class="solarpanel">
-                    <p class="equals">=</p>
-                    <p class="multiplier">1 meter</p>
-                    <img src="img/ledstrips.jpg" alt="Phone Image" class="solarpanel">
-                </div>
-            </div>
-
-
-            <div class="card" style="margin-top: 0">
-                ${(this.energy >= 25 ? "<b class='chargable-card'>🔋</b>" : "<b class='chargable-card'>🪫</b>")}
-                <h2>Gloeilamp</h2>
-                <p>Een gloeilamp van <strong>200-300 Lumen</strong> verbruik: ongeveer <strong>25 tot 30 Watt</strong>.
-                De lumen (symbool: lm) is de eenheid voor lichtstroom. Het is een maat voor de totale hoeveelheid zichtbaar licht die een lichtbron in alle richtingen uitstraalt.
-                Met andere woorden hoe harder de lamp brand hoe hoger dit lumen getal zal zijn.
-                Zo verbruikt bijvoorbeeld een gloeilamp met <strong>1250-2000 Lumen</strong> wel <strong>150 tot 250 Watt</strong>.</p>
-                <div class="flex-center-container">
-                    <p class="multiplier">6 X</p>
-                    <img src="img/solarpanel.jpg" alt="Solarpanel Image" class="solarpanel">
-                    <p class="equals">=</p>
-                    <img src="img/gloeilamp.jpeg" alt="Phone Image" class="solarpanel">
-                </div>
-            </div>
-
-            <div class="card">
-                ${(this.energy >= (10 * 3 * 3600) ? "<b class='chargable-card'>🔋</b>" : "<b class='chargable-card'>🪫</b>")}
-                <h2>GSM</h2>
-                <p>Een gemiddelde smartphone van tegenwoordig heeft het vermogen van <strong>10 á 11 Watt per uur</strong>.
-                Met een normale <strong>USB-oplader die 3.5 Watt levert</strong>, zou het dus ongeveer <strong>3 á 3,5 uur duren voordat de telefoon volledig is opgeladen</strong>.</p>
-                <div class="flex-center-container">
-                    <p class="multiplier">3 X</p>
-                    <img src="img/solarpanel.jpg" alt="Solarpanel Image" class="solarpanel">
-                    <p class="equals">=</p>
-                    <img src="img/gsm.jpg" alt="Phone Image" class="solarpanel">
-                </div>
-            </div>
-
-            <div class="card">
-                ${(this.energy >= (15000 * 3600) ? "<b class='chargable-card'>🔋</b>" : "<b class='chargable-card'>🪫</b>")}
-
-                <h2>Elektrische wagen</h2>
-                <p>Bij het gebruik van elektrische auto's druk je het verbruik ook uit in het aantal kilometers per energie-eenheid. Dit is een kilowattuur (kWh). Er zijn twee eenheden die op elkaar lijken: kiloWatt (kW) en kiloWattuur (kWh). Dit zijn echter verschillende grootheden.<br>
-                Voor meer duidelijkheid te schetsen van wat nu eenmaal een KW is; 1 KW is hetzelfde als 1000 Watt.</p>
-                <p>kWh is een vaste meeteenheid voor de hoeveelheid energie, die bijvoorbeeld past in een volle batterij. De batterij in een elektrische auto wordt altijd omschreven in het aantal kWh oftewel de hoeveelheid energie die past er in een volle batterij.<br></p>
-                <p>kW is daarentegen de eenheid voor kracht/vermogen. Je berekent kW namelijk door het voltage = 230 maal het Amperage (16) te vermenigvuldigen. 16 x 230 is (afgerond) 3,7 kW. Voluit: 16 x 230 = 3680 Watt. Dat delen we door 1000 om er kW van te maken = 3,7 kW.<br>
-                Bij een elektrische auto wordt het verbruik dus wat anders uitgedrukt. Bijvoorbeeld: "14 kWh per 100 km".<br></p>
-                <p>Hoeveel stroom verbruikt een elektrische auto dan echt?<br>
-                Het verbruik van een elektrische auto is afhankelijk van een aantal factoren, zoals het vermogen van de motor en het gewicht. Het gemiddelde verbruik van een elektrische auto ligt tussen de 8 kWh en 30 kWh per 100 kilometer. Stel dat je 10.000 kilometer per jaar rijdt, dan verbruik je met een auto die 15 kWh per 100 kilometer rijdt, 1500 kWh per jaar.<br></p>
-                <p><strong>Verbruik van bekende modellen:</strong><br>
-                Audi e-tron S 55 quattro: 27 kWh per 100 km<br>
-                Nissan Leaf: 16,5 kWh per 100 km<br>
-                Tesla Model 3: 14,9 kWh per 100 km<br>
-                Mini Cooper SE: 15,6 kWh per 100 km</p>
-                <div class="flex-center-container">
-                    <p class="multiplier">28 X</p>
-                    <img src="img/solarpanel.jpg" alt="Solarpanel Image" class="solarpanel">
-                    <p class="equals">=</p>
-                    <p class="multiplier">1 kilometer met</p>
-                    <img src="img/tesla.jpg" alt="Phone Image" class="solarpanel">
-                </div>
-            </div>
-
-            <div class="card">
-                ${(this.energy >= (83.8 * 3600) ? "<b class='chargable-card'>🔋</b>" : "<b class='chargable-card'>🪫</b>")}
-                <h2>Water koken</h2>
-                <p>Het benodigde vermogen om <strong>1 liter water in 1 uur</strong> op te warmen <strong>van 20°C naar 80°C is ongeveer 0,0838 kW (83,8 watt)</strong>.<br>
-                Wanneer we opwarmen met een <strong>niet specifiek temperatuurverschil</strong>, dan heb je voor <strong>elke graad Celsius temperatuurverschil, ongeveer 1,396 watt nodig om 1 liter water in 1 uur te verwarmen</strong>.</p>
-                <div class="flex-center-container">
-                    <p class="multiplier">17 X</p>
-                    <img src="img/solarpanel.jpg" alt="Solarpanel Image" class="solarpanel">
-                    <p class="equals">=</p>
-                    <p class="multiplier">1 uur tot</p>
-                    <img src="img/kokendwater.jpg" alt="Phone Image" class="solarpanel">
-                </div>
-            </div>
-        </div>
+  async connectedCallback() {
+    this.innerHTML = `
+            <div class="card-container"></div>
         `;
+    setTimeout(async () => {
+      await this.loadCardsFromDatabase();
+    })
+
+    this.innerHTML += `
+      <form id="newCardForm">
+      <style>
+                  #error-messages {
+                      margin-top: 1rem;
+                      padding: 0.5rem;
+                      border: 1px solid #dc3545; /* Red border */
+                      background-color: #f8d7da; /* Light red background */
+                      color: #721c24; /* Dark red text color */
+                      border-radius: 0.25rem;
+                      display: none;
+                  }
+
+                  #error-messages div {
+                      margin-bottom: 0.5rem;
+                  }
+                </style>
+                <div id="error-messages" class="text-danger"></div>
+        <input type="number" id="energyRequirement" name="energyRequirement" placeholder="Energy Requirement" required>
+        <input type="text" id="title" name="title" placeholder="Title" required>
+        <textarea id="description" name="description" placeholder="Description" required></textarea>
+        <input type="number" id="multiplier" name="multiplier" placeholder="Multiplier" required>
+        <input type="text" id="poweredDevice" name="poweredDevice" placeholder="Powered Device">
+        <div class="file-input-container" style="margin-top: 1rem;">
+                        <input type="file" id="contentFile" class="content-file-input">
+                        <label for="contentFile" id="contentFileLabel" class="content-file-label">Kies bestand</label>
+                        <span id="fileNameDisplay" class="file-name-display"></span>
+                    </div>
+        <button type="submit">Create Card</button>
+      </form>
+    `;
+
+    let cardToUpload = null;
+
+    this.registerEventListener(document.getElementById('newCardForm'), 'submit', async function (event){
+      event.preventDefault();
+
+      const cardEnergyRequirement = document.getElementById('energyRequirement').value;
+      const cardTitle = document.getElementById('title').value;
+      const cardDescription = document.getElementById('description').value;
+      const cardMultiplier = document.getElementById('multiplier').value;
+      const cardPoweredDevice = document.getElementById('poweredDevice').value;
+      const formData = new FormData();
+      const uniqueIdentifiers = [];
+
+      const fileElement = document.getElementById('contentFile');
+      let content = {};
+      if (fileElement.files[0]){
+        const uniqueIdentifier = generateUniqueIdentifier();
+        const file = fileElement.files[0];
+        formData.append('files', file);
+        uniqueIdentifiers.push(uniqueIdentifier);
+
+        content = {
+          fileData : file.name,
+          fileUid : uniqueIdentifier
+        };
+      }
+      const cardData = {
+        energyRequirement: cardEnergyRequirement,
+        title: cardTitle,
+        description: cardDescription,
+        multiplier:  cardMultiplier,
+        poweredDevice: cardPoweredDevice,
+        image2: content
+      };
+
+      formData.append('fileIdentifiers', JSON.stringify(uniqueIdentifiers));
+
+      formData.append('cardData', JSON.stringify(cardData));
+
+      try{
+        let response = await cardService.createCard(formData);
+        console.log(response);
+        if (response.ok){
+          console.log('Card created successfully');
+        }
+        if (response.status === 400 ) {
+          const errorData = await response.json();
+          if (errorData.explanation){
+            displayErrors(errorData.explanation);
+          }
+        }
+        else {
+          console.error('Failed to create card');
+        }
+      } catch (error) {
+        console.error('Error creating card:', error);
+        alert('Er is een fout opgetreden bij het maken van de kaart. Probeer het opnieuw.');
+
+      }
+
+
+    });
+
+    function generateUniqueIdentifier() {
+      return '_' + Math.random().toString(36).substr(2, 9);
     }
+
+    function displayErrors(errors) {
+      const errorMessagesContainer = document.getElementById('error-messages');
+      errorMessagesContainer.style.display = 'block'; // Show the error messages container
+      errorMessagesContainer.innerHTML = ''; // Clear previous error messages
+
+      const errorList = document.createElement('ul'); // Create an unordered list for the error messages
+
+      for (const [key, value] of Object.entries(errors)) {
+        const errorMessageItem = document.createElement('li'); // Create a list item for each error message
+        if (value == 'Energy requirement must be a non-negative number') {
+          errorMessageItem.textContent = 'Energiebehoefte moet een niet-negatief getal zijn.';
+        } else if (value == 'Title is required') {
+          errorMessageItem.textContent = 'Titel is vereist.';
+        } else if (value == 'Description is required') {
+          errorMessageItem.textContent = 'Beschrijving is vereist.';
+        } else if (value == 'Multiplier must be a positive integer') {
+          errorMessageItem.textContent = 'Vermenigvuldiger moet een positief geheel getal zijn.';
+        } else if (value == 'Image2 is required') {
+          errorMessageItem.textContent = 'Afbeelding2 is vereist.';
+        } else {
+          errorMessageItem.textContent = value;
+        }
+        errorList.appendChild(errorMessageItem); // Append each error message to the list
+      }
+
+      errorMessagesContainer.appendChild(errorList); // Append the list to the error messages container
+    }
+
+  }
+
+  generateHtml() {
+    const container = document.querySelector('.card-container');
+
+    container.innerHTML = '';
+
+    this.cards.forEach(card => {
+      const cardElement = document.createElement('div');
+      cardElement.className = 'card';
+      cardElement.style.marginTop = '0';
+
+      const batteryElement = document.createElement('b');
+      batteryElement.className = 'chargable-card';
+      batteryElement.textContent = this.energy >= card.energyRequirement ? '🔋' : '🪫';
+      cardElement.appendChild(batteryElement);
+
+      const titleElement = document.createElement('h2');
+      titleElement.textContent = card.title;
+      cardElement.appendChild(titleElement);
+
+      const descriptionElement = document.createElement('p');
+      descriptionElement.innerHTML = card.description;
+      cardElement.appendChild(descriptionElement);
+
+      const flexContainerElement = document.createElement('div');
+      flexContainerElement.className = 'flex-center-container';
+
+      const multiplierElement = document.createElement('p');
+      multiplierElement.className = 'multiplier';
+      multiplierElement.textContent = `${card.multiplier} X`;
+      flexContainerElement.appendChild(multiplierElement);
+
+      const image1Element = document.createElement('img');
+      image1Element.src = card.image1;
+      image1Element.alt = `${card.title} Image 1`;
+      image1Element.className = 'solarpanel';
+      flexContainerElement.appendChild(image1Element);
+
+      const equalsElement = document.createElement('p');
+      equalsElement.className = 'equals';
+      equalsElement.textContent = '=' + (card.poweredDevice || '');
+      flexContainerElement.appendChild(equalsElement);
+
+      const image2Element = document.createElement('img');
+      image2Element.src = `/backend/${card.image2}`;
+      image2Element.alt = `${card.title} Image 2`;
+      image2Element.className = 'solarpanel';
+      flexContainerElement.appendChild(image2Element);
+
+      cardElement.appendChild(flexContainerElement);
+
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.classList.add(`delete-button-${card.id}`);
+      cardElement.appendChild(deleteButton);
+
+      deleteButton.addEventListener('click', async () => {
+        if (confirm(`Weet je zeker dat je de kaart "${card.title}" wilt verwijderen?`)) {
+          await CardService.deleteCard(card.id);
+          this.cards = await CardService.fetchAllCards();
+          this.generateHtml();
+        }
+      });
+
+      container.appendChild(cardElement);
+    });
+
+
+  }
+
+
+
 }
 
 customElements.define('energy-voorwerp-overview', EnergyVoorwerpOverview);

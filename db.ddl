@@ -94,6 +94,17 @@ CREATE TABLE password_resets (
                                  expires DATETIME NOT NULL
 );
 
+CREATE TABLE cards (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       energy_requirement DECIMAL(20, 2) NOT NULL,
+                       name VARCHAR(255) NOT NULL,
+                       description TEXT NOT NULL,
+                       multiplier VARCHAR(255) NOT NULL,
+                       powered_device VARCHAR(255),
+                       image1 VARCHAR(255),
+                       image2 VARCHAR(255)
+);
+
 SET GLOBAL event_scheduler = ON;
 
 CREATE EVENT IF NOT EXISTS clean_expired_resets

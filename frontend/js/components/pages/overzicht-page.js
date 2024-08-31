@@ -1,6 +1,7 @@
 class OverzichtPage extends HTMLElement {
   constructor() {
     super();
+    this.energy = 0.00;
   }
 
   connectedCallback() {
@@ -11,7 +12,7 @@ class OverzichtPage extends HTMLElement {
           <div style="${sessionStorage.getItem('token') ? "margin-top: 1rem;" : ""}">
             <energy-voorwerp-overview></energy-voorwerp-overview>
           </div>
-        </div>`
+        </div>`;
   }
 }
 

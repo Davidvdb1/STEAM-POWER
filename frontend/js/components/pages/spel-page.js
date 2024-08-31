@@ -24,6 +24,7 @@ class SpelPage extends SPAComponent {
         '<custom-slider id="1" ></custom-slider>' : ''}
           <leader-board></leader-board>
         </div>
+        <building-table></building-table>
       </div>`;
 
     const teacherToken = sessionStorage.getItem('token');

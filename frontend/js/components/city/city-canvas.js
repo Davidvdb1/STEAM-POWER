@@ -2,6 +2,7 @@ import { ErrorEnum } from "../../../types/errorEnum.js";
 import BuildingService from "../../../service/building.service.js";
 import ClassroomService from "../../../service/classroom.service.js";
 import SPAComponent from "../model/SPAComponent.js";
+import ImageService from '../../../service/image.service.js';
 
 class CityCanvas extends SPAComponent {
   constructor() {
@@ -9,7 +10,7 @@ class CityCanvas extends SPAComponent {
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
 
-    this.backgroundImage = { src: './img/city.jpeg', x: 0, y: 0, coords: [] };
+    this.backgroundImage = { src: '/backend/img/city.jpeg', x: 0, y: 0, coords: [] };
     setTimeout(async () => {
       this.buildings = await BuildingService.fetchAllBuildings();
       this.chargedBuildings = await ClassroomService.getAllChargedBuildings();
@@ -64,6 +65,74 @@ class CityCanvas extends SPAComponent {
     this.loadStyling();
   }
 
+  connectedCallback() {
+    // Append the form to this.innerHTML
+    this.insertAdjacentHTML('beforeend', `
+    <form id="imageForm">
+      <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
+      <button type="submit">Upload Image</button>
+    </form>
+  `);
+
+    // Register an event listener for the form's submit event
+    this.registerEventListener(document.getElementById('imageForm'), 'submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData();
+      const fileInput = document.querySelector('#imageFile');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        alert('No file selected');
+        console.error('Error: No file selected');
+        return;
+      }
+
+      formData.append('image', file);
+
+      try {
+        const response = await ImageService.uploadImage(formData);
+
+        if (response.ok) {
+          console.log('Image uploaded successfully');
+        } else {
+          const errorData = await response.json();
+          if (response.status === 400) {
+            console.error('Bad Request: No detailed explanation provided.');
+          } else if (response.status === 500) {
+            console.error('Server error: Please try again later.');
+          } else if (response.status === 401) {
+            console.error('Unauthorized: Please log in.');
+          } else if (response.status === 403) {
+            console.error('Forbidden: You do not have permission to upload images.');
+          } else {
+            console.error(`Unknown error occurred during image upload: ${response.status} ${response.statusText}`);
+          }
+        }
+      } catch (error) {
+        console.error('Network or server error:', error);
+
+        // Capture the error stack trace
+        console.error('Stack Trace:', error.stack);
+
+        if (error instanceof TypeError) {
+          console.error('There was a network problem or the request was blocked.');
+        } else if (error.message.includes('timeout')) {
+          console.error('Request timed out.');
+        } else {
+          console.error('An unexpected error occurred:', error.message);
+        }
+
+        alert('Error uploading image');
+      }
+    });
+
+    //const buildings = await this.loadBuildings();
+
+    //this.createBuildingTable(buildings);
+
+    // Existing code...
+  }
   updateCanvasSize = () => {
     if (this.canvasHeight + this.canvas_offset_x <= window.innerWidth) {
       this.canvas.width = this.canvasHeight;
@@ -575,6 +644,40 @@ class CityCanvas extends SPAComponent {
       this.buildings[i].cost_watt = newBuildings[i].cost_watt;
     }
   }
+
+  createBuildingTable(buildings) {
+    // Create the table
+    const table = document.createElement('table');
+
+    // Create the table header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    ['Building Name', 'Building Type', 'Building Size'].forEach(text => {
+      const th = document.createElement('th');
+      th.textContent = text;
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Create the table body
+    const tbody = document.createElement('tbody');
+    buildings.forEach(building => {
+      const row = document.createElement('tr');
+      [building.name, building.type, building.size].forEach(text => {
+        const td = document.createElement('td');
+        td.textContent = text;
+        row.appendChild(td);
+      });
+      tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+
+    // Append the table to the CityCanvas element
+    this.appendChild(table);
+  }
+
+
 }
 
 customElements.define('my-city-canvas', CityCanvas);

@@ -32,7 +32,32 @@ const chargeBuilding = async (building) => {
   }
 }
 
+const createBuilding = async (building) => {
+  const token = sessionStorage.getItem('token');
+  return await fetch(`${API_URL}/buildings/create`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    },
+    body: building,
+  });
+}
+
+const deleteBuilding = async (buildingId) => {
+  const token = sessionStorage.getItem('token');
+
+  return await fetch(`${API_URL}/buildings/delete/${buildingId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+  });
+}
+
 export default {
   fetchAllBuildings,
   chargeBuilding,
+  createBuilding,
+  deleteBuilding,
 }

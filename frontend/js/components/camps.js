@@ -25,6 +25,8 @@ class Camps extends SPAComponent {
             camps = await response.json();
         }
 
+        console.log('Camps data:', camps);
+
         const token = sessionStorage.getItem("token");
 
         // Get the current sort option

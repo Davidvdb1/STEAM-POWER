@@ -10,6 +10,7 @@ delete from password_resets;
 delete from camp_workshop;
 delete from workshop_component;
 delete from classroom_power_building;
+delete from cards;
 
 ALTER TABLE building AUTO_INCREMENT = 1;
 ALTER TABLE workshop AUTO_INCREMENT = 1;
@@ -19,6 +20,7 @@ ALTER TABLE classroom AUTO_INCREMENT = 1;
 ALTER TABLE user AUTO_INCREMENT = 1;
 ALTER TABLE slider AUTO_INCREMENT = 1;
 ALTER TABLE password_resets AUTO_INCREMENT = 1;
+ALTER TABLE cards AUTO_INCREMENT = 1;
 INSERT INTO building SET `name` = 'De Lijn Bus', `cost_watt` = 700, `reward` = 5, `image` = '{\"src\":\"./img/bus.png\",\"x\":0,\"y\":0,\"title\":\"De Lijn Bus\",\"modal_offset\":{\"x\":130,\"y\":210},\"modalOpen\":false,\"coords\":[{\"x\":400,\"y\":670},{\"x\":399,\"y\":663},{\"x\":394,\"y\":658},{\"x\":390,\"y\":652},{\"x\":361,\"y\":635},{\"x\":341,\"y\":626},{\"x\":334,\"y\":627},{\"x\":331,\"y\":634},{\"x\":334,\"y\":644},{\"x\":346,\"y\":657},{\"x\":355,\"y\":657},{\"x\":365,\"y\":670},{\"x\":377,\"y\":673},{\"x\":385,\"y\":678},{\"x\":392,\"y\":675}]}';
 INSERT INTO building SET `name` = 'Speedboot', `cost_watt` = 700, `reward` = 5, `image` = '{\"src\":\"./img/boot.png\",\"x\":0,\"y\":0,\"title\":\"Speedboot\",\"modal_offset\":{\"x\":450,\"y\":360},\"modalOpen\":false,\"coords\":[{\"x\":924,\"y\":937},{\"x\":930,\"y\":937},{\"x\":937,\"y\":942},{\"x\":948,\"y\":946},{\"x\":959,\"y\":953},{\"x\":970,\"y\":950},{\"x\":979,\"y\":946},{\"x\":982,\"y\":937},{\"x\":982,\"y\":929},{\"x\":976,\"y\":921},{\"x\":970,\"y\":913},{\"x\":964,\"y\":904},{\"x\":957,\"y\":897},{\"x\":949,\"y\":886},{\"x\":940,\"y\":876},{\"x\":933,\"y\":868},{\"x\":924,\"y\":862},{\"x\":917,\"y\":858},{\"x\":907,\"y\":853},{\"x\":900,\"y\":856},{\"x\":894,\"y\":862},{\"x\":886,\"y\":865},{\"x\":880,\"y\":868},{\"x\":873,\"y\":869},{\"x\":864,\"y\":868},{\"x\":854,\"y\":867},{\"x\":845,\"y\":867},{\"x\":839,\"y\":871},{\"x\":839,\"y\":877},{\"x\":844,\"y\":884},{\"x\":848,\"y\":890},{\"x\":854,\"y\":896},{\"x\":861,\"y\":900},{\"x\":869,\"y\":906},{\"x\":879,\"y\":912},{\"x\":887,\"y\":916},{\"x\":895,\"y\":918},{\"x\":902,\"y\":923},{\"x\":909,\"y\":928},{\"x\":916,\"y\":931}]}';
 INSERT INTO building SET `name` = 'Cruiseschip', `cost_watt` = 1400, `reward` = 10, `image` = '{\"src\":\"./img/boot2.png\",\"x\":0,\"y\":0,\"title\":\"Cruiseschip\",\"modal_offset\":{\"x\":340,\"y\":390},\"modalOpen\":false,\"coords\":[{\"x\":598,\"y\":925},{\"x\":617,\"y\":923},{\"x\":638,\"y\":919},{\"x\":657,\"y\":916},{\"x\":679,\"y\":911},{\"x\":697,\"y\":915},{\"x\":712,\"y\":922},{\"x\":720,\"y\":934},{\"x\":729,\"y\":944},{\"x\":733,\"y\":955},{\"x\":741,\"y\":965},{\"x\":741,\"y\":982},{\"x\":722,\"y\":989},{\"x\":701,\"y\":984},{\"x\":682,\"y\":975},{\"x\":660,\"y\":965},{\"x\":641,\"y\":954},{\"x\":618,\"y\":946}]}';
@@ -107,3 +109,9 @@ INSERT INTO workshop_component (workshop_id, component_id, position) VALUES (5, 
 INSERT INTO camp_workshop (camp_id, workshop_id, position) VALUES (1, 5, 5);
 INSERT INTO slider (multiplier) VALUES (50);
 INSERT INTO user (username, email, password) VALUES ( 'admin', 'twaleuvennoreply@gmail.com', '$2b$10$hUbsQyL1KAcKZaITIld.BOclW0QKHV7CRVQ6JoVwPEz3XYyn1fEuW');
+INSERT INTO cards (name, description, multiplier, powered_device, image1, image2, energy_requirement) VALUES
+('Ledstrip', 'Typisch neemt een LED strip tussen de 14 en 15 W/meter. Elke LED van een LED strip zou minder dan 0.2 Watt Vermogen vragen. Dus met 1 Watt-seconde kan je één LED van een LED strip 5 seconden laten branden.', 3, '1 meter', 'img/solarpanel.jpg', 'img/ledstrips.jpg', 15),
+('Gloei Lampen', 'Een gloeilamp van 200-300 Lumen verbruik: ongeveer 25 tot 30 Watt. De lumen (symbool: lm) is de eenheid voor lichtstroom. Het is een maat voor de totale hoeveelheid zichtbaar licht die een lichtbron in alle richtingen uitstraalt. Met andere woorden hoe harder de lamp brand hoe hoger dit lumen getal zal zijn. Zo verbruikt bijvoorbeeld een gloeilamp met 1250-2000 Lumen wel 150 tot 250 Watt.', 6, NULL, 'img/solarpanel.jpg', 'img/gloeilamp.jpeg', 25),
+('GSM', 'Een gemiddelde smartphone van tegenwoordig heeft het vermogen van 10 á 11 Watt per uur. Met een normale USB-oplader die 3.5 Watt levert, zou het dus ongeveer 3 á 3,5 uur duren voordat de telefoon volledig is opgeladen.', 3, NULL, 'img/solarpanel.jpg', 'img/gsm.jpg', 108000),
+('Elektrische wagen', 'Bij het gebruik van elektrische auto\'s druk je het verbruik ook uit in het aantal kilometers per energie-eenheid. Dit is een kilowattuur (kWh). Er zijn twee eenheden die op elkaar lijken: kiloWatt (kW) en kiloWattuur (kWh). Dit zijn echter verschillende grootheden. Voor meer duidelijkheid te schetsen van wat nu eenmaal een KW is; 1 KW is hetzelfde als 1000 Watt.', 28, '1 kilometer met', 'img/solarpanel.jpg', 'img/tesla.jpg', 54000000),
+('Water koken', 'Het benodigde vermogen om 1 liter water in 1 uur op te warmen van 20°C naar 80°C is ongeveer 0,0838 kW (83,8 watt). Wanneer we opwarmen met een niet specifiek temperatuurverschil, dan heb je voor elke graad Celsius temperatuurverschil, ongeveer 1,396 watt nodig om 1 liter water in 1 uur te verwarmen.', 17, '1 uur tot', 'img/solarpanel.jpg', 'img/kokendwater.jpg', 301680);

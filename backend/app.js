@@ -5,6 +5,7 @@ import workshopRouter from './routes/workshopRouter.js';
 import campRouter from './routes/campRouter.js';
 import sliderRouter from './routes/sliderRouter.js';
 import mailRouter from './routes/mailRouter.js';
+import cardRouter from './routes/cardRouter.js';
 import pool from './db.js';
 import 'dotenv/config';
 import { expressjwt } from 'express-jwt';
@@ -12,6 +13,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import buildingRouter from "./routes/buildingRouter.js";
 import { CustomException } from './domain/model/customException.js';
+import uploadImageRouter from './routes/uploadImageRouter.js';
 
 const app = express();
 app.use(helmet());
@@ -20,6 +22,8 @@ app.use(helmet.contentSecurityPolicy({
         connectSrc: ['self', 'https://api.ucll.be', 'http://localhost:3000', 'http://localhost:52330'],
     }
 }));
+
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
 
 const port = process.env.PORT || 3000;
 
@@ -42,6 +46,8 @@ app.use(
             /^\/workshops\/\d+$/,
             '/mails/send-recover-mail',
             '/users/reset-password',
+            '/cards',
+            '/upload-image-endpoint/',
         ],
     })
 );
@@ -50,7 +56,12 @@ app.use(
 app.use(express.json());
 
 app.get('/status', (req, res, next) => {
-    res.send('Hello World');
+    res.send('Hello World testing changes');
+});
+
+app.get('/test', (req, res) => {
+    console.log('Test route hit');
+    res.send('Test route');
 });
 
 // Test database connection
@@ -71,6 +82,8 @@ app.use('/camps', campRouter);
 app.use('/buildings', buildingRouter);
 app.use('/sliders', sliderRouter);
 app.use('/mails', mailRouter);
+app.use('/cards', cardRouter);
+app.use('/upload-image-endpoint', uploadImageRouter);
 
 app.use((err, req, res, next) => {
     if (err.name === "UnauthorizedError") {

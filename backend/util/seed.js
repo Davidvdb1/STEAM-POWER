@@ -48,7 +48,6 @@ const resetData = async () => {
 }
 await resetData();
 
-
 const buildings = [
     {
         name: 'De Lijn Bus', cost_watt: 700.00, reward: 5,

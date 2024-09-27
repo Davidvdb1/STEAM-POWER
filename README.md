@@ -188,7 +188,7 @@ Another way is opening your browser and surfing to the url `http://localhost:523
 When everything is set up correctly, you can now log in as a teacher with the following credentials:
 
 - Email: `twaleuvennoreply@gmail.com`
-- Password: `Admin#Secure$2024`
+- Password: ``
 
 ### Navigation and Creating New Pages
 
